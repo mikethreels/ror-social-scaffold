@@ -5,6 +5,9 @@
         Name: <%= user.name %>
         <span class="profile-link">
           <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+          <%if @friend_arr.includes?(user.id)%>
+          <button><%= linkt_to 'Invite',  %></button>
+          <% end %>
         </span>
       </li>
     <% end %>
