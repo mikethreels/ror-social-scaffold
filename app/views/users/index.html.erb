@@ -1,7 +1,5 @@
 <section class="users-section">
   <ul class="users-list">
-  <p><%= @temp %></p>
-  <p><%=current_user.friendships.pluck(:friend_id, :status) + current_user.reverse_friendships.pluck(:user_id, :status)%></p>
     <% @users.each do |user| %>
       <li>
         Name: <%= user.name %>

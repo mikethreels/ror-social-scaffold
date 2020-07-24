@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.ordered_by_most_recent
+    confirmed_friends
   end
 
   def confirmed_friends
@@ -21,8 +22,9 @@ class UsersController < ApplicationController
     end
     @temp
   end
+
   def invite
     Friendship.create(user_id: current_user.id, friend_id: params[:friend_id])
-    redirect_to users_path
+    redirect_back(fallback_location: root_path) 
   end
 end
