@@ -14,17 +14,6 @@ class UsersController < ApplicationController
     @pending_friends = friend_search {|friend| friend[1].nil? }
   end
 
-  def friend_search
-    all_friend_arr = current_user.friendships.pluck(:friend_id, :status) + current_user.reverse_friendships.pluck(:user_id, :status)
-    temporary_friends = []
-    all_friend_arr.select do | friend |
-      if yield(friend)
-        temporary_friends << friend[0] 
-      end
-    end
-    temporary_friends
-  end
-
   def invite
     Friendship.create(user_id: current_user.id, friend_id: params[:friend_id])
     redirect_back(fallback_location: root_path) 
