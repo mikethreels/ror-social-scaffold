@@ -9,6 +9,6 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
     resources :likes, only: [:create, :destroy]
   end
-
+  post 'invite', to: 'users#invite'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

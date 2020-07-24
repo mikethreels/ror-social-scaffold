@@ -1,12 +1,14 @@
 <section class="users-section">
   <ul class="users-list">
+  <p><%= @temp %></p>
+  <p><%=current_user.friendships.pluck(:friend_id, :status) + current_user.reverse_friendships.pluck(:user_id, :status)%></p>
     <% @users.each do |user| %>
       <li>
         Name: <%= user.name %>
         <span class="profile-link">
           <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
-          <%if @friend_arr.includes?(user.id)%>
-          <button><%= linkt_to 'Invite',  %></button>
+          <%unless @temp.include?(user.id) || user.id == current_user.id%>
+          <%= button_to 'invite', invite_path, method: :post, params: { friend_id: user.id } %>
           <% end %>
         </span>
       </li>

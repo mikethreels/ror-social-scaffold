@@ -13,12 +13,16 @@ class UsersController < ApplicationController
 
   def confirmed_friends
     @friend_arr = current_user.friendships.pluck(:friend_id, :status) + current_user.reverse_friendships.pluck(:user_id, :status)
-    @friend_arr.select! do | i |
-      i.pop if i[1] == true
+    @temp = []
+    @friend_arr.select do | i |
+      if i[1] == true || i[1].nil?
+        @temp << i[0] 
+      end
     end
-    @friend_arr.flatten!
+    @temp
   end
   def invite
-
+    Friendship.create(user_id: current_user.id, friend_id: params[:friend_id])
+    redirect_to users_path
   end
 end
