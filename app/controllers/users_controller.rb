@@ -3,20 +3,20 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    @confirmed_friends = friend_search {|friend| friend[1] == true }
-    @pending_friends = friend_search {|friend| friend[1].nil? }
+    @confirmed_friends = friend_search { |friend| friend[1] == true }
+    @pending_friends = friend_search { |friend| friend[1].nil? }
   end
 
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.ordered_by_most_recent
-    @confirmed_friends = friend_search {|friend| friend[1] == true }
-    @pending_friends = friend_search {|friend| friend[1].nil? }
+    @confirmed_friends = friend_search { |friend| friend[1] == true }
+    @pending_friends = friend_search { |friend| friend[1].nil? }
   end
 
   def invite
     Friendship.create(user_id: current_user.id, friend_id: params[:friend_id])
-    redirect_back(fallback_location: root_path) 
+    redirect_back(fallback_location: root_path)
   end
 
   def invitation
@@ -24,24 +24,18 @@ class UsersController < ApplicationController
     all_invitations = current_user.reverse_friendships.pluck(:user_id, :status)
     @pending_invitations = []
     all_invitations.select do |friend|
-      if friend[1].nil?
-        @pending_invitations << friend[0] 
-      end
+      @pending_invitations << friend[0] if friend[1].nil?
     end
     @pending_invitations
   end
 
   def accept
     current_user.reverse_friendships.find_by(user_id: params[:friend_id]).update(status: true)
-    redirect_back(fallback_location: root_path) 
+    redirect_back(fallback_location: root_path)
   end
 
   def ignore
     current_user.reverse_friendships.find_by(user_id: params[:friend_id]).destroy
-    redirect_back(fallback_location: root_path)   
+    redirect_back(fallback_location: root_path)
   end
-
-
-
-
 end
