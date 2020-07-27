@@ -13,6 +13,4 @@ class UsersController < ApplicationController
     @confirmed_friends = friend_search { |friend| friend[1] == true }
     @pending_friends = friend_search { |friend| friend[1].nil? }
   end
-
-
 end
