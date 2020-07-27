@@ -3,16 +3,6 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  def friend_search
-    all_friend_arr = current_user.friendships.pluck(:friend_id, :status),
-                     + current_user.reverse_friendships.pluck(:user_id, :status)
-    temporary_friends = []
-    all_friend_arr.select do |friend|
-      temporary_friends << friend[0] if yield(friend)
-    end
-    temporary_friends
-  end
-
   protected
 
   def configure_permitted_parameters

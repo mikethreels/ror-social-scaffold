@@ -9,9 +9,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
     resources :likes, only: [:create, :destroy]
   end
-  post 'invite', to: 'users#invite'
-  get 'invitation', to: 'users#invitation'
-  post 'accept', to: 'users#accept'
-  post 'ignore', to: 'users#ignore'
+  resources :friendships, only: [:create, :update, :destroy]
+  get 'invitation', to: 'friendships#invitation'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

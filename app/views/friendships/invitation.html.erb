@@ -10,8 +10,9 @@
           Name: <%= user.name %>
           <span class="profile-link">
             <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
-            <%= button_to 'Accept', accept_path, method: :post, params: { friend_id: user.id } %>
-            <%= button_to 'Ignore', ignore_path, method: :post, params: { friend_id: user.id } %>
+            <p><%= find_friendship_id(user.id) %></p>
+            <%= button_to 'Accept', friendship_path(find_friendship_id(user.id)), method: :patch %>
+            <%= button_to 'Ignore', friendship_path(find_friendship_id(user.id)), method: :delete %>
           </span>
         </li>
       <% end %>
