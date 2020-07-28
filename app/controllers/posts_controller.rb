@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
+  include FriendshipHelper
 
   def index
     @post = Post.new
@@ -21,6 +22,9 @@ class PostsController < ApplicationController
 
   def timeline_posts
     @timeline_posts ||= Post.all.ordered_by_most_recent.includes(:user)
+    my_friends = friend_search { |friend| friend[1] == true }
+    my_friends << current_user.id
+    @timeline_posts = @timeline_posts.select { |post| my_friends.include?(post.user_id) }
   end
 
   def post_params

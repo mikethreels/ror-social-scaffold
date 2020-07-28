@@ -1,0 +1,20 @@
+<section class="users-section">
+  <h2>Friend Requests</h2>
+  <% if @pending_invitations.empty? %>
+    <br><p>You do not have any pending invitations</p>
+  <% end %>
+  <ul class="users-list">
+    <% @users.each do |user| %>
+      <% if @pending_invitations.include?(user.id) %>
+        <li>
+          Name: <%= user.name %>
+          <span class="profile-link">
+            <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+            <%= button_to 'Accept', friendship_path(find_friendship_id(user.id)), method: :patch %>
+            <%= button_to 'Ignore', friendship_path(find_friendship_id(user.id)), method: :delete %>
+          </span>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</section>

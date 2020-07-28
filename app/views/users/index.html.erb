@@ -1,10 +1,12 @@
 <section class="users-section">
+  <h2>All Users</h2>
   <ul class="users-list">
     <% @users.each do |user| %>
       <li>
         Name: <%= user.name %>
         <span class="profile-link">
           <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+          <%= invite_button(user.id) %>
         </span>
       </li>
     <% end %>
