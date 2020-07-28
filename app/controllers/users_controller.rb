@@ -12,5 +12,6 @@ class UsersController < ApplicationController
     @posts = @user.posts.ordered_by_most_recent
     @confirmed_friends = friend_search { |friend| friend[1] == true }
     @pending_friends = friend_search { |friend| friend[1].nil? }
+    @show_friend = friend_search(@user) { |friend| friend[1] == true }
   end
 end

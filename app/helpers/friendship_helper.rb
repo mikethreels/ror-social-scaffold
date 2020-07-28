@@ -1,7 +1,7 @@
 module FriendshipHelper
-  def friend_search
-    user_friends = current_user.friendships.pluck(:friend_id, :status)
-    inverse_friends = current_user.reverse_friendships.pluck(:user_id, :status)
+  def friend_search(user = current_user)
+    user_friends = user.friendships.pluck(:friend_id, :status)
+    inverse_friends = user.reverse_friendships.pluck(:user_id, :status)
 
     all_friend_arr = user_friends + inverse_friends
 
@@ -9,7 +9,16 @@ module FriendshipHelper
     all_friend_arr.select do |friend|
       temporary_friends << friend[0] if yield(friend)
     end
-    temporary_friends
+    return temporary_friends if user == current_user
+
+    
+    friend_info = []
+    temporary_friends.each do | id |
+      friend_info << User.find_by(id: id)
+    end
+    friend_info
+  
+
   end
 
   def find_friendship_id(user_id)
