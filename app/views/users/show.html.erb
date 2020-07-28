@@ -7,16 +7,22 @@
       <%= render @posts %>
     </ul>
   </article>
-</section>
 
-<ul class="users-list">
-    <% @show_friend.each do |user| %>
+  <h2>Mutual Friends</h2><br>
+  <% if @mutual_friend.empty? %>
+    <p>You do not have any mutual friends</p>
+  <% end %>
+  <ul class="users-list">
+    <% @mutual_friend.each do |user| %>
       <li>
-        Name: <%= user.name %>
+        <%= user.name %>
         <span class="profile-link">
           <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
         </span>
       </li>
     <% end %>
-</ul>
+  </ul>
+</section>
+
+
 

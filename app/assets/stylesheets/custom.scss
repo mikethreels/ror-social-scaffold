@@ -309,6 +309,12 @@ form {
 
     justify-content: start;
   }
+
+  .profile-link {
+    font-size: 0.8em;
+    margin: 0 0 8px 0;
+    color: $primary-color-dark;
+  }
 }
 
 #error_explanation {

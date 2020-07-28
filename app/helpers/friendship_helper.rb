@@ -9,16 +9,20 @@ module FriendshipHelper
     all_friend_arr.select do |friend|
       temporary_friends << friend[0] if yield(friend)
     end
+
     return temporary_friends if user == current_user
 
-    
     friend_info = []
-    temporary_friends.each do | id |
+    temporary_friends.each do |id|
       friend_info << User.find_by(id: id)
     end
     friend_info
-  
+  end
 
+  def find_mutual_friend
+    @show_friend.select do |friend|
+      @confirmed_friends.include?(friend.id)
+    end
   end
 
   def find_friendship_id(user_id)
