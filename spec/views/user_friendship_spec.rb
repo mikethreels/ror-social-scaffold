@@ -3,7 +3,7 @@ require 'rails_helper'
 # rspec spec/views/user_spec.rb
 RSpec.describe 'Main flow', type: :system do
   let(:test_friend) { User.create(name: 'Friend Test', email: 'friend@example.com', password: 'password') }
-  let(:test_user) { User.create(name: 'User Test', email: 'user@example.com', password: 'password') } 
+  let(:test_user) { User.create(name: 'User Test', email: 'user@example.com', password: 'password') }
   describe 'New user' do
     it 'User sign-up is correct' do
       # Access Home Page
@@ -67,7 +67,7 @@ RSpec.describe 'Main flow', type: :system do
       # Logout friend
       click_link('Sign out')
     end
-  end  
+  end
   describe 'create post' do
     it 'path is correct' do
       test_user
@@ -95,7 +95,7 @@ RSpec.describe 'Main flow', type: :system do
       click_link('Like!')
       sleep 1
 
-      # Logout 
+      # Logout
       click_link('Sign out')
     end
   end
