@@ -1,19 +1,12 @@
 module FriendshipHelper
-  def friend_search
-    user_friends = current_user.friendships.pluck(:friend_id, :status)
-    inverse_friends = current_user.reverse_friendships.pluck(:user_id, :status)
-
-    all_friend_arr = user_friends + inverse_friends
-
-    temporary_friends = []
-    all_friend_arr.select do |friend|
-      temporary_friends << friend[0] if yield(friend)
-    end
-    temporary_friends
+  def find_mutual_friend
+    @show_friend.select do |friend|
+      @confirmed_friends.include?(friend[0])
+    end.uniq
   end
 
   def find_friendship_id(user_id)
-    current_user.reverse_friendships.find_by(user_id: user_id).id
+    current_user.inverted_friendships.find_by(user_id: user_id).id
   end
 
   def invite_button(user_id)

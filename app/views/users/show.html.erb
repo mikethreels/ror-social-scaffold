@@ -1,5 +1,5 @@
 <section class="user-section">
-  <h2><%= "Name: #{@user.name}" %></h2>
+  <h2><%= "Name: #{@user.name}" %></h2><br>
   <%= invite_button(@user.id) %>
   <article class="timeline">
     <h3>Recent posts:</h3>
@@ -7,4 +7,22 @@
       <%= render @posts %>
     </ul>
   </article>
+
+  <h2>Mutual Friends</h2><br>
+  <% if @mutual_friend.empty? %>
+    <p>You do not have any mutual friends</p>
+  <% end %>
+  <ul class="users-list">
+    <% @mutual_friend.each do |user| %>
+      <li>
+        <%= user[1] %>
+        <span class="profile-link">
+          <%= link_to 'See Profile',  user_path(user[0]), class: 'profile-link' %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
 </section>
+
+
+

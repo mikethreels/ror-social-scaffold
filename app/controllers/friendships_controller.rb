@@ -1,12 +1,7 @@
 class FriendshipsController < ApplicationController
   def invitation
     @users = User.all
-    all_invitations = current_user.reverse_friendships.pluck(:user_id, :status)
-    @pending_invitations = []
-    all_invitations.select do |friend|
-      @pending_invitations << friend[0] if friend[1].nil?
-    end
-    @pending_invitations
+    @pending_invitations = current_user.inverted_friendships.pluck(:user_id)
   end
 
   def create
@@ -16,7 +11,7 @@ class FriendshipsController < ApplicationController
 
   def update
     @friendship = Friendship.find(params[:id])
-    @friendship.update(status: true)
+    @friendship.confirm_friend
     redirect_back(fallback_location: root_path)
   end
 
