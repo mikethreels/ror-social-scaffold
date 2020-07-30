@@ -11,6 +11,7 @@ module FriendshipHelper
 
   def invite_button(user_id)
     button = (button_to 'invite', friendships_path, method: :post, params: { friend_id: user_id }).html_safe
-    return button unless (@confirmed_friends + @pending_friends).include?(user_id) || current_user.id == user_id
+    all_friends = @confirmed_friends + @pending_friends + @friend_requests
+    return button unless all_friends.include?(user_id) || current_user.id == user_id
   end
 end

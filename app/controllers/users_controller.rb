@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     @users = User.all
     @confirmed_friends = current_user.friends.pluck(:friend_id)
     @pending_friends = current_user.pending_friends.pluck(:friend_id)
+    @friend_requests = current_user.friend_requests.pluck(:user_id)
   end
 
   def show
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
     @posts = @user.posts.ordered_by_most_recent
     @confirmed_friends = current_user.friends.pluck(:friend_id)
     @pending_friends = current_user.pending_friends.pluck(:friend_id)
+    @friend_requests = current_user.friend_requests.pluck(:user_id)
     @show_friend = @user.friends.pluck(:friend_id, :name)
     @mutual_friend = find_mutual_friend
   end
